@@ -1,0 +1,14 @@
+#drugSearch {
+    width: 270px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-section {
+    padding: 20px;
+}
