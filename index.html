@@ -17,12 +17,57 @@
                 <input type="text" id="drugSearch" placeholder="Enter drug name (e.g, Amoxicillin, Panadol)">
                 <button onclick="handleSearch()">Search</button>
             </div>
+
+            <main class="container">
+                <div id="results"></div>
+            </main>
+
+            <div class="categories">
+                <h2>Browse by Categories</h2>
+
+                <!--Categories generic categories for user to be able to search through-->
+                <div class="category-grid">
+
+                    <div class="category-card" onclick="searchCategory('Antibiotics')">
+                        <span class="icon">💊</span>
+                        <h3>Antibiotics</h3>
+                        <p>Amoxicillin, Azithromycin, etc.</p>
+                    </div>
+
+                    <div class="category-card" onclick="searchCategory('Pain Relief')">
+                        <span class="icon">🩹</span>
+                        <h3>Pain Relief</h3>
+                        <p>Ibuprofen, Paracetamol, etc.</p>
+                    </div>
+
+                    <div class="category-card" onclick="searchCategory('Heart Health')">
+                        <span class="icon">❤️</span>
+                        <h3>Heart Health</h3>
+                        <p>Lisinopril, Atorvastatin, etc.</p>
+                    </div>
+
+                    <div class="category-card" onclick="searchCategory('Mental Health')">
+                        <span class="icon">🧘🏽</span>
+                        <h3>Mental Health</h3>
+                        <p>Sertaline, Fluoxetine, etc.</p>
+                    </div>
+
+                    <div class="category-card" onclick="searchCategory('Allergy')">
+                        <span class="icon">🌡️</span>
+                        <h3>Allergy</h3>
+                        <p>Cetirizine, Loratadine, etc.</p>
+                    </div>
+
+                    <div class="category-card" onclick="searchCategory('Diabetes')">
+                        <span class="icon">📊</span>
+                        <h3>Diabetes</h3>
+                        <p>Metformin, Insulin, etc.</p>
+                    </div>
+
+                </div>
+            </div>
         </div>
     </section>
-
-    <main class="container">
-        <div id="results"></div>
-    </main>
 
     <script src="script.js"></script>
 </body>
