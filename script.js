@@ -1,5 +1,5 @@
 const apiKey = process.env.OPEN_FDA_API_KEY;
-// const apiKey = {your_api_key};
+// const apiKey = ""
 
 
 //This function allows me to interact with the json file through the url to the Open FDA api
@@ -77,12 +77,12 @@ function displayDrugInfo(simpleData) {
         <h2>💊 ${simpleData.brandName}</h2>
 
         <div class="info-section">
-            <h3>Generic Name</h3>
+            <h3> 📌 Generic Name</h3>
             <div class="scrollable-content"> ${simpleData.genericName}</div>
         </div>
 
         <div class="info-section">
-            <h3>Purpose</h3>
+            <h3>🎯Purpose</h3>
             <div class="scrollable-content"> ${simpleData.purpose}</div>
         </div>
 
