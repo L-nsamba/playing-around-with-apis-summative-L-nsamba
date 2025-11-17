@@ -1,5 +1,5 @@
 const apiKey = process.env.OPEN_FDA_API_KEY;
-// const apiKey = {put_your_api_key}
+// const apiKey = {your_api_key};
 
 
 //This function allows me to interact with the json file through the url to the Open FDA api
@@ -74,12 +74,33 @@ function displayDrugInfo(simpleData) {
 
     resultsDiv.innerHTML = `
     <div class="drug-card">
-        <h2>${simpleData.brandName}</h2>
-        <p><strong>Generic Name:</strong> ${simpleData.genericName}</p>
-        <p><strong>Purpose:</strong> ${simpleData.purpose}</p>
-        <p><strong>Warnings:</strong> ${simpleData.warnings}</p>
-        <p><strong>Common Side Effects:</strong> ${simpleData.sideEffects}</p>
-        <p><strong>Dosage:</strong> ${simpleData.dosage}</p>
+        <h2>💊 ${simpleData.brandName}</h2>
+
+        <div class="info-section">
+            <h3>Generic Name</h3>
+            <div class="scrollable-content"> ${simpleData.genericName}</div>
+        </div>
+
+        <div class="info-section">
+            <h3>Purpose</h3>
+            <div class="scrollable-content"> ${simpleData.purpose}</div>
+        </div>
+
+        <div class="info-section">
+            <h3>⚠️ Warnings</h3>
+            <div class="scrollable-content"> ${simpleData.warnings}</div>
+        </div>
+
+        <div class="info-section">
+            <h3>🚨 Side Effects</h3>
+            <div class="scrollable-content">${simpleData.sideEffects}</div>
+        </div>
+
+        <div class="info-section">
+            <h3>💊 Dosage Information</h3>
+            <div class="scrollable-content">${simpleData.dosage}</div>
+        </div>
+
     </div>
     `
 }
