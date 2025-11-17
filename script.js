@@ -62,7 +62,7 @@ function displayDrugInfo(simpleData) {
     const resultsDiv = document.getElementById(`results`);
 
     if (simpleData.loading) {
-        resultsDiv.innerHTML = `<p>🔍 Searching...</p>`;
+        resultsDiv.innerHTML = `<p>🔎 Searching for drug information...</p>`;
         return;
     }
 
@@ -103,4 +103,39 @@ function displayDrugInfo(simpleData) {
 
     </div>
     `
+}
+
+// This function allows the searching through the drug categories in browse categories
+
+function searchCategory(category) {
+
+    const categoryDrugs = {
+        'Antibiotics': ['Amoxicillin', 'Azithromycin', 'Doxycycline'],
+        'Pain Relief': ['Ibuprofen', 'Acetaminophen ', 'Naproxen'],
+        'Heart Health': ['Lisinopril', 'Atorvastatin', 'Metoprolol'],
+        'Mental Health': ['Sertraline', 'Fluoxetine', 'Escitalopram'],
+        'Allergy': ['Cetirizine', 'Loratadine', 'Fexofenadine'],
+        'Diabetes': ['Metformin', 'Insulin', 'Glipizide']
+    };
+
+    const drugs = categoryDrugs[category];
+
+    if(drugs) {
+        //Randomizes through the category and displays info of a random drug in that category
+        const randomDrug = drugs[Math.floor(Math.random() * drugs.length)];
+
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.innerHTML = `<div class="loading">🔎 Showing random ${category.toLowerCase()}
+        medication: <strong>${randomDrug}</strong>
+        </div>`;
+
+        //Triggering the inputting of the random drug selected into the search bar
+        document.getElementById('drugSearch').value = randomDrug;
+
+        resultsDiv.scrollIntoView({behavior: 'smooth'});
+
+        setTimeout(() => {
+            handleSearch();
+        }, 3000);
+    }
 }
