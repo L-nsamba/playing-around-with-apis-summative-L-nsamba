@@ -1,5 +1,5 @@
-// const apiKey = process.env.OPEN_FDA_API_KEY;
-const apiKey = ""
+const apiKey = process.env.OPEN_FDA_API_KEY;
+// const apiKey = ""
 
 
 //This function allows me to interact with the json file through the url to the Open FDA api
