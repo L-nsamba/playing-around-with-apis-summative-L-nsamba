@@ -139,3 +139,63 @@ function searchCategory(category) {
         }, 3000);
     }
 }
+
+//Pharmacy finder logic
+async function findPharmacies(){
+    const resultsDiv = document.getElementById('results');
+
+    resultsDiv.innerHTML = `<div class="loading"> 📍 Finding your location...</div>`;
+    resultsDiv.scrollIntoView({behavior:'smooth'});
+
+    try {
+        const position = await getCurrentPositionWithTimeout();
+        await searchWithCoordinates(position.coords.latitude, position.coords.longitude);
+    } catch (error) {
+        showManualLocationInput();
+    }
+}
+
+//This function is responsible for accessing the current position of the user
+function getCurrentPositionWithTimeout (timeout = 10000) {
+    return new Promise ((resolve, reject) => {
+        if (!navigator.geolocation) {
+            reject(new Error('Geolocation not supported'));
+            return;
+        }
+
+        navigator.geolocation.getCurrentPosition(resolve, reject, {
+            timeout: timeout,
+            enableHighAccuracy: false
+        });
+    })
+}
+
+//This function searching for pharamcies in proximity basing on the geographical coordinates
+async function searchWithCoordinates(lat, lng) {
+    const resultsDiv = document.getElementById('results');
+    resultsDiv.innerHTML = `<div class="loading">📍 Searching for nearby pharamcies...</div>`;
+
+    try {
+        //This will query for pharmacies within 5km relative to the users location
+        const query = `
+            [out:json];
+            node[amenity=pharmacy](around:5000, ${lat}, ${lng});
+            out body;
+        `;
+
+        const response = await fetch('https://overpass-api.de/api/interpreter', {
+            method: 'POST',
+            body: 'data=' +encodeURIComponent(query)
+        });
+
+        const data = await response.json();
+
+        if (data.elements && data.elements.length > 0) {
+            displayPharmacies(data.elements, lat, lng);
+        } else {
+            showManualLocationInput('❌ No pharmacies found nearby. Try a different location.');
+        }
+    } catch (error) {
+        showManualLocationInput('❌ Search failed. Please enter your location manually')
+    }
+}
