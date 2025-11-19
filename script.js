@@ -1,5 +1,5 @@
-const apiKey = process.env.OPEN_FDA_API_KEY;
-// const apiKey = ""
+// const apiKey = process.env.OPEN_FDA_API_KEY;
+const apiKey = ""
 
 
 //This function allows me to interact with the json file through the url to the Open FDA api
@@ -170,10 +170,10 @@ function getCurrentPositionWithTimeout (timeout = 10000) {
     })
 }
 
-//This function searching for pharamcies in proximity basing on the geographical coordinates
+//This function searches for pharmacies in proximity basing on the geographical coordinates
 async function searchWithCoordinates(lat, lng) {
     const resultsDiv = document.getElementById('results');
-    resultsDiv.innerHTML = `<div class="loading">📍 Searching for nearby pharamcies...</div>`;
+    resultsDiv.innerHTML = `<div class="loading">📍 Searching for nearby pharmacies...</div>`;
 
     try {
         //This will query for pharmacies within 5km relative to the users location
@@ -199,3 +199,5 @@ async function searchWithCoordinates(lat, lng) {
         showManualLocationInput('❌ Search failed. Please enter your location manually')
     }
 }
+
+// function showManualLocationInput
