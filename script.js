@@ -200,4 +200,44 @@ async function searchWithCoordinates(lat, lng) {
     }
 }
 
-// function showManualLocationInput
+//This function prompts the user to manually enter their location incase of failure to access current live location
+function showManualLocationInput(message = 'Enter your location to find pharmacies:') {
+    const resultsDiv = document.getElementById('results');
+
+    resultsDiv.innerHTML = `
+        <div class="manual-location">
+            <h3>📍 Find Pharmacies</h3>
+            <p>${message}</p>
+            <div class="location-search">
+                <input type="text" id="locationInput" placeholder="Enter city or address">
+                <button onclick="searchWithManualLocation()">Search Pharmacies</button>
+            </div>
+            <p class="small-text">Or <a href='#' onclick="findPharmacies()">Try automatic location again</a></p>
+        </div>
+    `;
+}
+
+//This function contains the logic to actually search the API when user manually enters their location
+async function searchWithManualLocation() {
+    const address = document.getElementById('locationInput').value;
+
+    if (!address.trim()) {
+        alert('Please enter a location');
+        return;
+    }
+
+    try {
+        const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`);
+        const data = await response.json();
+
+        if (data.length > 0) {
+            const lat = parseFloat(data[0].lat);
+            const lon = parseFloat(data[0].lon);
+            await searchWithCoordinates(lat, lon);
+        } else {
+            alert ('Location not found. Try a different address.')
+        }
+    } catch (error) {
+        alert('Geocoding failed. Please try again');
+    }
+}
