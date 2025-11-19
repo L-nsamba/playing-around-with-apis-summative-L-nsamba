@@ -185,6 +185,9 @@ async function searchWithCoordinates(lat, lng) {
 
         const response = await fetch('https://overpass-api.de/api/interpreter', {
             method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
             body: 'data=' +encodeURIComponent(query)
         });
 
@@ -240,4 +243,56 @@ async function searchWithManualLocation() {
     } catch (error) {
         alert('Geocoding failed. Please try again');
     }
+}
+
+//This function shows the pharamcies found near the user basing on the coordinates of their current location & OpenStreetMap API
+function displayPharmacies(pharmacies, userLat, userLng) {
+    const resultsDiv = document.getElementById('results');
+
+    let html = `
+        <div class="pharmacy-results">
+            <h2>📍 Nearby Pharmacies</h2>
+            <p class="location-info">Found ${pharmacies.length} pharmacies nearby</p>
+            <div class="pharmacy-list">
+    `;
+
+    pharmacies.slice(0,8).forEach(pharmacy => {
+        const distance = calculateDistance(
+            userLat, userLng,
+            pharmacy.lat, pharmacy.lon
+        );
+
+        const name = pharmacy.tags?.name || 'Unknown Pharmacy'
+        const address = pharmacy.tags?.['addr:street'] || 'Address not available';
+
+        html += `
+            <div class="pharmacy-item">
+                <h3>🏥 ${name}</h3>
+                <p>📍 ${address}</p>
+                <p>🛣️ ${distance.toFixed(1)} km away</p>
+            </div>
+        `;
+    });
+
+    html += `
+            </div>
+            <p class="api-credit">Data from OpenStreetMap • Distances are approximate</p>
+        </div>
+    `;
+
+    resultsDiv.innerHTML = html;
+}
+
+//This function contains the core logic for the distance calculations and making sense of the users coordintes to find nearby pharmacies
+function calculateDistance(lat1, lon1, lat2, lon2) {
+    const R = 6371;
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+
+    const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+              Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+              Math.sin(dLon/2) * Math.sin(dLon/2)
+
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    return R * c
 }

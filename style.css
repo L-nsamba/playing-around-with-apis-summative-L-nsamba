@@ -242,6 +242,49 @@ button:hover {
     transform: translateX(5px);
 }
 
+.manual-location, .pharmacy-results {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 1rem 0;
+}
+
+.location-search {
+    display: flex;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.location-search input {
+    flex: 1;
+    padding: 12px;
+    border: 2px solid #e1e5e9;
+    border-radius: 6px;
+}
+
+.pharmacy-item {
+    border-bottom: 1px solid #eee;
+    padding: 1rem 0;
+}
+
+.pharmacy-item:last-child {
+    border-bottom: none;
+}
+
+.small-text {
+    font-size: 0.9rem;
+    color: #666;
+    margin-top: 1rem;
+}
+
+.api-credit {
+    font-size: 0.8rem;
+    color: #999;
+    text-align: center;
+    margin-top: 1rem;
+}
+
 /*Responsive design*/
 @media (max-width: 768px) {
     .search-section {
