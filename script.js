@@ -1,10 +1,22 @@
 // const apiKey = process.env.OPEN_FDA_API_KEY;
 const apiKey = ""
 
+//This function handles when the user selects browse category and ensures the search function displays multiple drugs in that category
+function isSpecificDrug(searchTerm) {
+    const categoryTerms = ['antibiotic', 'analgesic', 'cardiovascular', 'antidepressant', 'antihistamine', 'hypoglycemic'];
+    return !categoryTerms.includes(searchTerm.toLowerCase());
+}
 
 //This function allows me to interact with the json file through the url to the Open FDA api
-async function fetchDrugData(drugName) {
-    const url = `https://api.fda.gov/drug/label.json?api_key=${apiKey}&search=openfda.brand_name:"${drugName}"&limit=1`;
+async function fetchDrugData(searchTerm) {
+    const isCategorySearch = !isSpecificDrug(searchTerm);
+
+    let url;
+    if(isCategorySearch) {
+        url = `https://api.fda.gov/drug/label.json?api_key=${apiKey}&search=indications_and_usage:"${searchTerm}"&limit=10`;
+    } else {
+        url = `https://api.fda.gov/drug/label.json?api_key=${apiKey}&search=openfda.brand_name:"${searchTerm}"&limit=1`
+    }
 
     try {
         const response = await fetch(url);
@@ -16,10 +28,13 @@ async function fetchDrugData(drugName) {
         const data = await response.json();
 
         if (data.results && data.results.length > 0) {
-            return data.results[0];
-        } else {
-            throw new Error('No drug found with that name.');
+            if (isCategorySearch) {
+                return data;
+            } else {
+                return data.results[0];
+            }
         }
+
     } catch(error) {
         console.error('Failed to fetch drug data:', error);
         return { error: error.message};
@@ -28,7 +43,7 @@ async function fetchDrugData(drugName) {
 
 //This function is responsible for retrieving and making meaning of what the user enters in search field
 async function handleSearch() {
-    const drugName = document.getElementById(`drugSearch`).value;
+    const drugName = document.getElementById('drugSearch').value;
 
     if (!drugName) {
         displayDrugInfo({error: 'Please enter a drug name'});
@@ -38,9 +53,18 @@ async function handleSearch() {
     displayDrugInfo({loading: true});
 
     try {
-        const rawData = await fetchDrugData(drugName);
-        const simpleData = simplifyDrugData(rawData);
-        displayDrugInfo(simpleData);
+        const result = await fetchDrugData(drugName);
+
+        if (result.results && result.results.length > 1) {
+            displayMultipleOrSingleDrugInfo(result);
+        } else if (result.brandName || (result.openfda && result.openfda.brand_name)) {
+            const simpleData = simplifyDrugData(result);
+            displayDrugInfo(simpleData);
+        } else if (result.error) {
+            displayDrugInfo({error: result.error});
+        } else {
+            displayDrugInfo({error: 'Unexpected response from API'})
+        }
     } catch (error) {
         displayDrugInfo({error: 'Failed to fetch drug information'})
     }
@@ -105,39 +129,110 @@ function displayDrugInfo(simpleData) {
     `
 }
 
+//This function is responsible for listing the drug information under the specific categories in browse by category
+function displayMultipleDrugs(drugsData) {
+    const resultsDiv = document.getElementById('results');
+
+    if (!drugsData.results || drugsData.results.length === 0) {
+        resultsDiv.innerHTML = `<div class="error">No medications found in this category.</div>`;
+        return;
+    }
+
+    let html = `
+        <div class="category-results">
+            <h2>💊 Medications Found</h2>
+            <p class="results-count">Showing ${drugsData.results.length} medications</p>
+            <div class="drugs-grid">
+    `
+
+    drugsData.results.forEach(drug => {
+        const brandName = drug.openfda?.brand_name?.[0] || 'Unknown Brand Name';
+        const genericName = drug.openfda?.generic_name?.[0] || 'Unknown Generic Name';
+        const purpose = drug.indications_and_usage?.[0]?.substring(0, 100) + '...' || 'Purpose not specified';
+
+        html += `
+            <div class="drug-card-small" onclick="searchSpecificDrug('${brandName}')">
+            <h4>${brandName}</h4>
+            <p><strong>Generic:</strong> ${genericName}</p>
+            <p class="drug-purpose">${purpose}</p>
+            <div class="click-hint">Click for details -></div>
+        </div>
+        `;
+    });
+
+    html += `
+            </div>
+        </div>
+    `;
+
+    resultsDiv.innerHTML = html;
+}
+
+//This function handles the output where user enters browse category or if they enter directly the drug they are looking for in the search bar
+function displayMultipleOrSingleDrugInfo(data) {
+    if (data.results && data.results.length > 1) {
+        displayMultipleDrugs(data);
+    } else if (data.results && data.results.length === 1) {
+        const simpleData = simplifyDrugData(data.results[0]);
+        displayDrugInfo(simpleData);
+    } else {
+        displayError(data.error || 'No results found');
+    }
+}
+
+function displayError(message) {
+    const resultsDiv = document.getElementById('results');
+    resultsDiv.innerHTML = `<div class="error">❌ ${message}</div>`
+}
+
+//Function helps to search through a specific drug inside its category
+function searchSpecificDrug(drugName) {
+    document.getElementById('drugSearch').value = drugName;
+    handleSearch();
+}
+
 // This function allows the searching through the drug categories in browse categories
-
 function searchCategory(category) {
-
-    const categoryDrugs = {
-        'Antibiotics': ['Amoxicillin', 'Azithromycin', 'Doxycycline'],
-        'Pain Relief': ['Ibuprofen', 'Acetaminophen ', 'Naproxen'],
-        'Heart Health': ['Lisinopril', 'Atorvastatin', 'Metoprolol'],
-        'Mental Health': ['Sertraline', 'Fluoxetine', 'Escitalopram'],
-        'Allergy': ['Cetirizine', 'Loratadine', 'Fexofenadine'],
-        'Diabetes': ['Metformin', 'Insulin', 'Glipizide']
+    const categorySearches = {
+        'Antibiotics': {
+            searchTerm: 'antibiotic',
+            description: 'Medications that fight bacterial infection'
+        },
+        'Pain Relief': {
+            searchTerm: 'analgesic',
+            description: 'Drugs that relieve pain'
+        },
+        'Heart Health': {
+            searchTerm: 'cardiovascular',
+            description: 'Medications for heart and blood pressure'
+        },
+        'Mental Health': {
+            searchTerm: 'antidepressant',
+            description: 'Drugs for mental health conditions'
+        },
+        'Allergy': {
+            searchTerm: 'cetirizine',
+            description: 'Medications for allergy relief'
+        },
+        'Diabetes': {
+            searchTerm: 'hypoglycemic',
+            description: 'Drugs for diabetes management'
+        }
     };
 
-    const drugs = categoryDrugs[category];
+    const categoryData = categorySearches[category];
+    if (categoryData) {
+        const resultsDiv = document.getElementById('results')
+        resultsDiv.innerHTML = `<div class="loading">🔎 Searching for ${category.toLowerCase()} medications...</div>`;
+        resultsDiv.scrollIntoView({behavior:'smooth'});
 
-    if(drugs) {
-        //Randomizes through the category and displays info of a random drug in that category
-        const randomDrug = drugs[Math.floor(Math.random() * drugs.length)];
-
-        const resultsDiv = document.getElementById('results');
-        resultsDiv.innerHTML = `<div class="loading">🔎 Showing random ${category.toLowerCase()}
-        medication: <strong>${randomDrug}</strong>
-        </div>`;
-
-        //Triggering the inputting of the random drug selected into the search bar
-        document.getElementById('drugSearch').value = randomDrug;
-
-        resultsDiv.scrollIntoView({behavior: 'smooth'});
+        document.getElementById('drugSearch').value = categoryData.searchTerm;
 
         setTimeout(() => {
             handleSearch();
         }, 3000);
     }
+
 }
 
 //Pharmacy finder logic

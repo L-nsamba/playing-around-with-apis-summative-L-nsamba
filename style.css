@@ -202,6 +202,51 @@ button:hover {
     animation: pulse 1s infinite;
 }
 
+.category-results {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.results-count {
+    color: #666;
+    margin-bottom: 1.5rem;
+}
+
+.drugs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+}
+
+.drug-card-small {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 4px solid #007bff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.drug-card-small:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: #e3f2fd;
+}
+
+.drug-card-small h4 {
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.drug-purpose {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0.5rem 0;
+    line-height: 1.4;
+}
+
 @keyframes pulse {
     0% {transform: scale(1);}
     50% {transform: scale(1.1);}
