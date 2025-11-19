@@ -138,20 +138,40 @@ function displayMultipleDrugs(drugsData) {
         return;
     }
 
+    //Only returning drugs with both valid generic & brand name
+    const validDrugs = drugsData.results.filter(drug => {
+        const brandName = drug.openfda?.brand_name?.[0];
+        const genericName = drug.openfda?.generic_name?.[0];
+
+        return brandName &&
+               genericName &&
+               brandName.toLowerCase() !== 'unknown' &&
+               brandName.trim().length > 0 &&
+               genericName.trim().length > 0;
+    });
+
+    if (validDrugs.length === 0) {
+        resultsDiv.innerHTML = `<div class="error">No recognizable medications found in this category. Try a diiferenet search.</div>`;
+        return;
+    }
+
     let html = `
         <div class="category-results">
             <h2>💊 Medications Found</h2>
-            <p class="results-count">Showing ${drugsData.results.length} medications</p>
+            <p class="results-count">Showing ${validDrugs.length} medications</p>
             <div class="drugs-grid">
     `
 
-    drugsData.results.forEach(drug => {
-        const brandName = drug.openfda?.brand_name?.[0] || 'Unknown Brand Name';
-        const genericName = drug.openfda?.generic_name?.[0] || 'Unknown Generic Name';
+    validDrugs.forEach(drug => {
+        const brandName = drug.openfda?.brand_name?.[0];
+        const genericName = drug.openfda?.generic_name?.[0];
         const purpose = drug.indications_and_usage?.[0]?.substring(0, 100) + '...' || 'Purpose not specified';
 
+        //Escaping quotes from brand name to avoid errors
+        const safeBrandName = brandName.replace(/'/g, "\\'").replace(/"/g, '\\"')
+
         html += `
-            <div class="drug-card-small" onclick="searchSpecificDrug('${brandName}')">
+            <div class="drug-card-small" onclick="searchSpecificDrug('${safeBrandName}')">
             <h4>${brandName}</h4>
             <p><strong>Generic:</strong> ${genericName}</p>
             <p class="drug-purpose">${purpose}</p>
@@ -188,7 +208,15 @@ function displayError(message) {
 //Function helps to search through a specific drug inside its category
 function searchSpecificDrug(drugName) {
     document.getElementById('drugSearch').value = drugName;
-    handleSearch();
+
+    window.scrollTo({
+        top:0,
+        behavior:'smooth'
+    });
+
+    setTimeout(() => {
+        handleSearch();
+    }, 300)
 }
 
 // This function allows the searching through the drug categories in browse categories
@@ -211,7 +239,7 @@ function searchCategory(category) {
             description: 'Drugs for mental health conditions'
         },
         'Allergy': {
-            searchTerm: 'cetirizine',
+            searchTerm: 'antihistamine',
             description: 'Medications for allergy relief'
         },
         'Diabetes': {
