@@ -380,19 +380,14 @@ function displayPharmacies(pharmacies, userLat, userLng) {
     `;
 
     pharmacies.slice(0,8).forEach(pharmacy => {
-        const distance = calculateDistance(
-            userLat, userLng,
-            pharmacy.lat, pharmacy.lon
-        );
-
         const name = pharmacy.tags?.name || 'Unknown Pharmacy'
         const address = pharmacy.tags?.['addr:street'] || 'Address not available';
 
         html += `
             <div class="pharmacy-item">
                 <h3>🏥 ${name}</h3>
-                <p>📍 ${address}</p>
-                <p>🛣️ ${distance.toFixed(1)} km away</p>
+                <p>🛣️ ${address}<p>
+
             </div>
         `;
     });
@@ -406,16 +401,64 @@ function displayPharmacies(pharmacies, userLat, userLng) {
     resultsDiv.innerHTML = html;
 }
 
-//This function contains the core logic for the distance calculations and making sense of the users coordintes to find nearby pharmacies
-function calculateDistance(lat1, lon1, lat2, lon2) {
-    const R = 6371;
-    const dLat = (lat2 - lat1) * Math.PI / 180;
-    const dLon = (lon2 - lon1) * Math.PI / 180;
+//Drug recalls & updates function
+async function showDrugRecalls() {
+    const resultsDiv = document.getElementById('results');
+    resultsDiv.innerHTML = '<div class="loading">🔎 Searching for recent drug recalls...</div>';
 
-    const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-              Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-              Math.sin(dLon/2) * Math.sin(dLon/2)
+    resultsDiv.scrollIntoView({behavior: 'smooth'});
 
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-    return R * c
+    try {
+        const response = await fetch('https://api.fda.gov/drug/enforcement.json?limit=10&sort=report_date:desc');
+
+        const data = await response.json();
+
+        if(data.results && data.results.length > 0) {
+            displayRecalls(data.results);
+        } else {
+            resultsDiv.innerHTML = '<div class="error">No recent recalls found</div>'
+        }
+    } catch (error) {
+        resultsDiv.innerHTML = '<div class="error">Failed to load recall information</div>'
+    }
+}
+
+//This function is responsible for retrieving the drug recall information from the Open FDA API
+function displayRecalls(recalls) {
+    const resultsDiv = document.getElementById('results');
+
+    let html = `
+        <div class="recalls-section">
+            <h2>🚨 Recent Drug Recalls & Safety Alerts</h2>
+            <p class="recalls-info">Latest medication safety information from FDA</p>
+            <div class="recalls-lists">
+    `;
+
+    //Accessing the recall information I need from the json and creation of the frontend User Interface that will appear
+    recalls.forEach(recall => {
+        const product = recall.product_description || 'Product description not available';
+        const reason = recall.reason_for_recall || 'Reason not specified';
+        const company = recall.recalling_firm || 'Company not specified';
+
+
+        html += `
+            <div class="recall-item ${recall.recall_initiation_date ? 'recent' : ''}">
+                <h3>${product}</h3>
+                <div class="recall-meta">
+                    <span class="recall-company">🏢 ${company}</span>
+                </div>
+                <div class="recall-reason">
+                    <strong>Reason:</strong> ${reason}
+                </div>
+            </div>
+        `;
+    });
+
+    html += `
+            </div>
+            <p class="api-credit">Data from FDA Enforcement Reports • Updated regularly </p>
+        </div>
+    `;
+
+    resultsDiv.innerHTML = html;
 }
