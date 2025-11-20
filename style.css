@@ -90,6 +90,20 @@ button:hover {
     padding-bottom: 0.5rem;
 }
 
+.drug-card-small {
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.drug-card-small h4 {
+    word-break: break-all !important;
+    overflow-wrap: break-word !important;
+    word-wrap: break-word !important;
+    hyphens: none !important;
+    max-width: 100% !important;
+    display: block !important;
+}
+
 .info-section h3 {
     color: #2c3e50;
     margin-top: 1.5rem;
@@ -338,5 +352,72 @@ button:hover {
 
     .hero h1 {
         font-size: 2rem;
+    }
+}
+
+@media (max-width: 376px) {
+    .container {
+        padding: 0 0.8rem;
+    }
+
+    .hero h1 {
+        font-size: 1.5rem !important;
+        margin-bottom: 0.5rem;
+    }
+
+    .hero p {
+        font-size: 1rem !important;
+    }
+
+    .search-section {
+        flex-direction: column;
+        gap: 0.8rem;
+        margin-bottom: 1.5rem;
+    }
+
+    #drugSearch, .search-section button {
+        font-size: 16px;
+        padding: 12px 10px;
+    }
+
+    .categories h2 {
+        font-size: 1.5rem;
+        margin: 2rem 0 1rem 0;
+    }
+
+    .category-grid {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+    }
+
+    .category-card {
+        padding: 1.2rem 1rem;
+    }
+
+    .category-card .icon {
+        font-size: 1.8rem;
+    }
+
+    .drugs-grid {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+    }
+
+    .drug-card-small {
+        padding: 1rem 0.8rem;
+    }
+
+    .drug-card-small h4 {
+        font-size: 1rem;
+        line-height: 1.2;
+    }
+
+    .drug-purpose {
+        font: 0.85rem;
+    }
+
+    body, html {
+        overflow-x: hidden;
+        max-width: 100%;
     }
 }
