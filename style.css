@@ -479,4 +479,16 @@ button:hover {
         overflow-x: hidden;
         max-width: 100%;
     }
+
+    .recall-reason h3 {
+        font-size: 0.8rem;
+    }
+
+    .recall-reason {
+        font-size: 0.9rem;
+    }
+
+    .recall-item h3 {
+        font-size: 0.9rem;
+    }
 }

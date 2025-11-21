@@ -394,7 +394,7 @@ function displayPharmacies(pharmacies, userLat, userLng) {
 
     html += `
             </div>
-            <p class="api-credit">Data from OpenStreetMap • Distances are approximate</p>
+            <p class="api-credit">Data from OpenStreetMap</p>
         </div>
     `;
 
