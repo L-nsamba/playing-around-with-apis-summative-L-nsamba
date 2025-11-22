@@ -24,7 +24,6 @@ A full-stack web application that enables users to search for medications, explo
 
 #### Responsive Design 📱
 <li>Optimized user interface that works seamlessly across desktop and mobile devices</li>
-<br>
 
 ### 🏗️ Tech Stack
 1. Frontend: HTML, CSS, JavaScript
@@ -44,6 +43,7 @@ ii. Configure environment variables (create an .env file to store your API KEY)
     OPEN_FDA_API_KEY = {your-open-fda-key}
 ```
 NB: For the faciliators/graders, the key I used will be accessible via the comment section on Canvas.
+<br>
 <br>
 
 ### 🌐 Deployment Architecture
