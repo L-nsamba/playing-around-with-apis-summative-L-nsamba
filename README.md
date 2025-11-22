@@ -2,10 +2,12 @@
 
 ### 📖 Overview
 A full-stack web application that enables users to search for medications, explore drug categories, locate nearby pharmacies, and access real-time FDA drug recall alerts. The system is built with a scalable architecture featuring load balancing, SSL encryption, and integration with two external APIs.
+<br>
 
 ### 🔗 Live Demo
 <li> Live Application URL: https://www.leonnsamba.tech || https://leonnsamba.tech </li>
 <li> Video Demo : Coming soon... 🚧</li>
+<br>
 
 ### 🎯 Features
 #### Drug Search & Information 🔬
@@ -22,11 +24,13 @@ A full-stack web application that enables users to search for medications, explo
 
 #### Responsive Design 📱
 <li>Optimized user interface that works seamlessly across desktop and mobile devices</li>
+<br>
 
 ### 🏗️ Tech Stack
 1. Frontend: HTML, CSS, JavaScript
 2. Deployment: Nginx, Ubuntu 18.04 LTS
 3. APIs: OpenFDA API, OpenStreetMap (OSM) API
+<br>
 
 ### 🛠️ Setup & Installation
 i. Clone the project repository locally in your desired terminal and serve the ``` index.html ``` file with your local server deployer of choice (e.g Live Server for VS Code)
@@ -40,5 +44,19 @@ ii. Configure environment variables (create an .env file to store your API KEY)
     OPEN_FDA_API_KEY = {your-open-fda-key}
 ```
 NB: For the faciliators/graders, the key I used will be accessible via the comment section on Canvas.
+<br>
 
 ### 🌐 Deployment Architecture
+The application is deployed using a load-balanced infrastructure for scalibility and avaliablity on both servers.
+<img src="images/meditrack_architecture.png" width=400/>
+<br>
+<img src="images/round_robin.png" width=600 />
+<br>
+### Infrastructure Details
+<li>Load Balancer: Nginx on Ubuntu 18.04 with round-robin distribution</li>
+<li>Web Servers: Two application instances for redundancy</li>
+<li>SSL/TLS: Let's Encrypt certificates with automatic renewal</li>
+<li>Firewall: UFW configured to allow SSH(22), HTTP(80), and HTTPS(443)</li>
+<br>
+
+### 🚀 Deployment Guide
