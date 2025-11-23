@@ -60,3 +60,24 @@ The application is deployed using a load-balanced infrastructure for scalibility
 <br>
 
 ### 🚀 Deployment Guide
+#### 1. Application Deployment
+Clone the repository locally on your machine then transfer it to the respective servers
+<li><strong>Transfering to my two Web Servers</strong></li>
+
+```sh
+    git clone https://github.com/L-nsamba/playing-around-with-apis-summative-L-nsamba.git
+    scp -i ~/.ssh/my_first_key -r playing-around-with-apis-summative-L-nsamba ubuntu@52.87.192.192:~
+    scp -i ~/.ssh/my_first_key -r playing-around-with-apis-summative-L-nsamba ubuntu@52.91.235.48:~
+```
+NB: You will be required to enter your private key passpharse for your key and your own IP addresses
+
+#### 2. Load Balancer Configuration
+SSH into the load balancer and configure Nginx
+<li>Install Nginx if you do not have it already</li>
+
+```sh
+    ssh -i ~/.ssh/my_first_key ubuntu@54.163.3.11
+    sudo apt update && sudo apt upgrade
+    sudo apt install nginx
+    sudo systemctl status nginx (Confirmation that it is active)
+```
