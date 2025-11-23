@@ -150,7 +150,7 @@ Special thanks to the API developers whose APIs I used for this project:
 #### OpenStreetMap (OSM) API
 <li>Purpose: Find nearby pharamcies and location information</li>
 <li>Documentation: https://taginfo.openstreetmap.org/taginfo/apidoc </li>
-<li>Rate Limits: 60 requests per minut</li>
+<li>Rate Limits: 60 requests per minute </li>
 
 <br>
 
@@ -159,7 +159,7 @@ Special thanks to the API developers whose APIs I used for this project:
 Solution: I discovered that I had made a slight error in my sites-enabled configuring part that was preventing my load balancer from interchanging between servers. I resolved this by adding the headers information into the load balancer file in the sites-enabled
 
 #### Drug category extractor issue
-Solution: I discovered that the drug category section had a bit of an issue extracting multiple drug types. I resolved this by emphasizing in my js that the search Term should only be search in the section of the json file corresponding to indications_and_usage. Although this did not extract all the drugs within that set category, it was the most effective key name to extract maximum drugs from the json with the specified category key word.
+Solution: I discovered that the drug category section had a bit of an issue extracting multiple drug types. I resolved this by emphasizing in my js that the search Term should only search in the section of the json file corresponding to "indications_and_usage". Although this did not extract all the drugs within that set category, it was the most effective key name to extract maximum drugs from the json with the specified category key word.
 
 <br>
 
