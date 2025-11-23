@@ -78,6 +78,8 @@ Clone the repository locally on your machine then transfer it to the respective 
 ```
 NB: You will be required to enter your private key passpharse for your key and your own IP addresses
 
+<br>
+
 #### 2. Load Balancer Configuration
 SSH into the load balancer and configure Nginx
 <li>Install Nginx if you do not have it already</li>
@@ -103,6 +105,8 @@ SSH into the load balancer and configure Nginx
     sudo nginx -t (Test Nginx is active/running)
     sudo systemctl reload nginx
 ```
+<br>
+
 #### 3. SSL Certificate Setup
 <li>Install and configure Let's Encrypt if you do not have it already</li>
 
@@ -121,6 +125,8 @@ NB: You would be required to enter your respective valid domain name. Additional
     sudo cat /etc/letsencrypt/live/www.leonnsamba.tech/nginx.pem (To view both simultaneously)
 ```
 
+<br>
+
 #### 4. Firewall Configuration
 <li>Configure UFW to allow necessary traffic</li>
 
@@ -131,4 +137,17 @@ NB: You would be required to enter your respective valid domain name. Additional
     sudo ufw enable
     sudo ufw status
 ```
+<br>
 
+### 🔧 API Integration
+The application integrates with the following APIs:
+
+#### OpenFDA Drug Database API
+<li>Purpose: Retrieve drug information and recall data</li>
+<li>Documentation: https://open.fda.gov/apis/drug/ </li>
+<li>Rate Limits: 240 requests per minute</li>
+
+#### OpenStreetMap (OSM) API
+<li>Purpose: Find nearby pharamcies and location information</li>
+<li>Documentation: https://taginfo.openstreetmap.org/taginfo/apidoc </li>
+<li>Rate Limits: 60 requests per minut</li>
