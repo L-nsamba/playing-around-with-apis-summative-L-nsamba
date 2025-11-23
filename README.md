@@ -24,6 +24,7 @@ A full-stack web application that enables users to search for medications, explo
 
 #### Responsive Design 📱
 <li>Optimized user interface that works seamlessly across desktop and mobile devices</li>
+<br>
 
 ### 🏗️ Tech Stack
 1. Frontend: HTML, CSS, JavaScript
@@ -62,12 +63,18 @@ The application is deployed using a load-balanced infrastructure for scalibility
 ### 🚀 Deployment Guide
 #### 1. Application Deployment
 Clone the repository locally on your machine then transfer it to the respective servers
-<li><strong>Transfering to my two Web Servers</strong></li>
+<li>Transfering to my two Web Servers</li>
 
 ```sh
     git clone https://github.com/L-nsamba/playing-around-with-apis-summative-L-nsamba.git
     scp -i ~/.ssh/my_first_key -r playing-around-with-apis-summative-L-nsamba ubuntu@52.87.192.192:~
     scp -i ~/.ssh/my_first_key -r playing-around-with-apis-summative-L-nsamba ubuntu@52.91.235.48:~
+```
+
+<li>Moving the directory to the valid html path location in each server</li>
+
+```sh
+    sudo mv playing-around-with-apis-summative-L-nsamba /var/www/html/
 ```
 NB: You will be required to enter your private key passpharse for your key and your own IP addresses
 
@@ -81,3 +88,47 @@ SSH into the load balancer and configure Nginx
     sudo apt install nginx
     sudo systemctl status nginx (Confirmation that it is active)
 ```
+
+<li>Create a file in the sites-available path and add the following configuration</li>
+
+```sh
+    sudo nano /etc/nginx/sites-available/loadbalancer
+```
+<img src="images/lb_configuration.png" width=600 />
+
+<li>Enable the configuration</li>
+
+```sh
+    sudo ln -s /etc/nginx/sites-available/loadbalancer /etc/nginx/sites-enabled/
+    sudo nginx -t (Test Nginx is active/running)
+    sudo systemctl reload nginx
+```
+#### 3. SSL Certificate Setup
+<li>Install and configure Let's Encrypt if you do not have it already</li>
+
+```sh
+    sudo apt install certbot
+    sudo certbot --nginx -d leonnsamba.tech -d www.leonnsamba.tech
+```
+NB: You would be required to enter your respective valid domain name. Additionally the certificate will auto-renew with Certbot's timer.
+
+<li>You can view your certificate keys using the command below:</li>
+
+```sh
+    sudo cat /etc/letsencrypt/live/www.leonnsamba.tech/fullchain.pem
+    sudo cat /etc/letsencrypt/live/www.leonnsamba.tech/fullchain.pem
+    OR
+    sudo cat /etc/letsencrypt/live/www.leonnsamba.tech/nginx.pem (To view both simultaneously)
+```
+
+#### 4. Firewall Configuration
+<li>Configure UFW to allow necessary traffic</li>
+
+```sh
+    sudo apt install ufw
+    sudo ufw allow 22/tcp
+    sudo ufw allow 443/tcp
+    sudo ufw enable
+    sudo ufw status
+```
+
