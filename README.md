@@ -61,7 +61,7 @@ The application is deployed using a load-balanced infrastructure for scalibility
 <br>
 
 ### 🚀 Deployment Guide
-#### 1. Application Deployment
+#### A) Application Deployment
 Clone the repository locally on your machine then transfer it to the respective servers
 <li>Transfering to my two Web Servers</li>
 
@@ -80,7 +80,7 @@ NB: You will be required to enter your private key passpharse for your key and y
 
 <br>
 
-#### 2. Load Balancer Configuration
+#### B) Load Balancer Configuration
 SSH into the load balancer and configure Nginx
 <li>Install Nginx if you do not have it already</li>
 
@@ -107,7 +107,7 @@ SSH into the load balancer and configure Nginx
 ```
 <br>
 
-#### 3. SSL Certificate Setup
+#### C) SSL Certificate Setup
 <li>Install and configure Let's Encrypt if you do not have it already</li>
 
 ```sh
@@ -127,7 +127,7 @@ NB: You would be required to enter your respective valid domain name. Additional
 
 <br>
 
-#### 4. Firewall Configuration
+#### D) Firewall Configuration
 <li>Configure UFW to allow necessary traffic</li>
 
 ```sh
@@ -140,7 +140,7 @@ NB: You would be required to enter your respective valid domain name. Additional
 <br>
 
 ### 🔧 API Integration
-The application integrates with the following APIs:
+Special thanks to the API developers whose APIs I used for this project:
 
 #### OpenFDA Drug Database API
 <li>Purpose: Retrieve drug information and recall data</li>
@@ -151,3 +151,19 @@ The application integrates with the following APIs:
 <li>Purpose: Find nearby pharamcies and location information</li>
 <li>Documentation: https://taginfo.openstreetmap.org/taginfo/apidoc </li>
 <li>Rate Limits: 60 requests per minut</li>
+
+<br>
+
+### 🚧 Challenges & Solutions
+#### Load Balancer Round-Robin Not Distributing Traffic
+Solution: I discovered that I had made a slight error in my sites-enabled configuring part that was preventing my load balancer from interchanging between servers. I resolved this by adding the headers information into the load balancer file in the sites-enabled
+
+#### Drug category extractor issue
+Solution: I discovered that the drug category section had a bit of an issue extracting multiple drug types. I resolved this by emphasizing in my js that the search Term should only be search in the section of the json file corresponding to indications_and_usage. Although this did not extract all the drugs within that set category, it was the most effective key name to extract maximum drugs from the json with the specified category key word.
+
+<br>
+
+### 👤 Author
+👨🏽‍💻**Leon Nsamba**<br>
+📧 **Email: l.nsamba@alustudent.com**<br>
+💻 **GitHub: [L-nsamba](https://github.com/L-nsamba)**
