@@ -13,7 +13,7 @@ A full-stack web application that enables users to search for medications, explo
 #### Drug Search & Information 🔬
 <li>Search for medication by name and you will be presented with a detailed pharmaceutical review of the generic name, purpose, warnings, side effects, and dosage information powered by the OpenFDA API. </li>
 
-#### Pharmacy Finder 🏥
+#### Pharmacy Finder (within 5km of your current location) 🏥
 <li>Find nearby pharmacies with location-based search functionality powered by the OpenStreetMap API.</li>
 
 #### Category Browse 🔎
