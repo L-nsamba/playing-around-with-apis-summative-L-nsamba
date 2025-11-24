@@ -1,4 +1,3 @@
-// const apiKey = process.env.OPEN_FDA_API_KEY;
 const apiKey = ""
 
 //This function handles when the user selects browse category and ensures the search function displays multiple drugs in that category
