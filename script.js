@@ -13,7 +13,7 @@ async function fetchDrugData(searchTerm) {
 
     let url;
     if(isCategorySearch) {
-        url = `https://api.fda.gov/drug/label.json?api_key=${apiKey}&search=indications_and_usage:"${searchTerm}"&limit=10`;
+        url = `https://api.fda.gov/drug/label.json?api_key=${apiKey}&search=(indications_and_usage:"${searchTerm}"+OR+description:"${searchTerm}")&limit=20`;
     } else {
         url = `https://api.fda.gov/drug/label.json?api_key=${apiKey}&search=openfda.brand_name:"${searchTerm}"&limit=1`
     }
