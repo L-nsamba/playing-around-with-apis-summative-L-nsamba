@@ -6,7 +6,7 @@ A full-stack web application that enables users to search for medications, explo
 
 ### 🔗 Live Demo
 <li> Live Application URL: https://www.leonnsamba.tech || https://leonnsamba.tech </li>
-<li> Video Demo : Coming soon... 🚧</li>
+<li> Video Demo : https://youtu.be/guuxI-xaRO8 </li>
 <br>
 
 ### 🎯 Features
