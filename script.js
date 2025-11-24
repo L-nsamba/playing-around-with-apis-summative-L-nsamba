@@ -374,7 +374,7 @@ function displayPharmacies(pharmacies, userLat, userLng) {
     let html = `
         <div class="pharmacy-results">
             <h2>📍 Nearby Pharmacies</h2>
-            <p class="location-info">Found ${pharmacies.length} pharmacies nearby</p>
+            <h3>🚗 Within 5km of your current location</h3>
             <div class="pharmacy-list">
     `;
 
