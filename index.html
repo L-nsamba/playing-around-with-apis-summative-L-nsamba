@@ -6,13 +6,14 @@
     <title>MEDITRACK</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preload" as="image" href="images/medicine_1.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
 
     <section class="hero">
         <div class="container">
-            <h1>🧬 MEDITRACK 🧬</h1>
-            <p>🔬 Search for medical information</p>
+            <h1><i class="fa-solid fa-dna"></i> MEDITRACK <i class="fa-solid fa-dna"></i></h1>
+            <p><i class="fa-solid fa-book-medical"></i> Search for medical information <i class="fa-solid fa-book-medical"></i></p>
 
             <div class="search-section">
                 <input type="text" id="drugSearch" placeholder="Enter a drug name">
@@ -30,56 +31,56 @@
                 <div class="category-grid">
 
                     <div class="category-card" onclick="searchCategory('Antibiotics')">
-                        <span class="icon">💊</span>
+                        <span class="icon"><i class="fa-solid fa-capsules"></i></span>
                         <h3>Antibiotics</h3>
                         <p>Medications that fight bacterial infection.</p>
                         <div class="click-hint">Click to explore -></div>
                     </div>
 
                     <div class="category-card" onclick="searchCategory('Pain Relief')">
-                        <span class="icon">🩹</span>
+                        <span class="icon"><i class="fa-solid fa-bandage"></i></span>
                         <h3>Pain Relief</h3>
                         <p>Medications that relieve pain</p>
                         <div class="click-hint">Click to explore -></div>
                     </div>
 
                     <div class="category-card" onclick="searchCategory('Heart Health')">
-                        <span class="icon">❤️</span>
+                        <span class="icon"><i class="fa-solid fa-heart"></i></span>
                         <h3>Heart Health</h3>
                         <p>Medications for heart and blood pressure.</p>
                         <div class="click-hint">Click to explore -></div>
                     </div>
 
                     <div class="category-card" onclick="searchCategory('Mental Health')">
-                        <span class="icon">🧘🏽</span>
+                        <span class="icon"><i class="fa-brands fa-medrt"></i></span>
                         <h3>Mental Health</h3>
                         <p>Medications for mental health conditions.</p>
                         <div class="click-hint">Click to explore -></div>
                     </div>
 
                     <div class="category-card" onclick="searchCategory('Allergy')">
-                        <span class="icon">🌡️</span>
+                        <span class="icon"><i class="fa-solid fa-thermometer"></i></span>
                         <h3>Allergy</h3>
                         <p>Medications for allergy relief.</p>
                         <div class="click-hint">Click to explore -></div>
                     </div>
 
                     <div class="category-card" onclick="searchCategory('Diabetes')">
-                        <span class="icon">📊</span>
+                        <span class="icon"><i class="fa-solid fa-droplet"></i></span>
                         <h3>Diabetes</h3>
                         <p>Medications for diabetes management.</p>
                         <div class="click-hint">Click to explore -></div>
                     </div>
 
                     <div class="category-card" onclick="findPharmacies()">
-                        <span class="icon">🏥</span>
+                        <span class="icon"><i class="fa-solid fa-hospital-user"></i></span>
                         <h3>Find Pharmacies</h3>
                         <p>Locate nearby pharmacies</p>
                         <div class="click-hint">Click to explore -></div>
                     </div>
 
                     <div class="category-card" onclick="showDrugRecalls()">
-                        <span class="icon">🚨</span>
+                        <span class="icon"><i class="fa-solid fa-triangle-exclamation"></i></span>
                         <h3>Drug Recalls & Alerts</h3>
                         <p>Latest medication safety updates</p>
                         <div class="click-hint">Click to explore -></div>
