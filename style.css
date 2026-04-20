@@ -412,7 +412,8 @@ button:hover {
     .hero h1 {
         font-size: 2rem;
     }
-   
+
+
     .location-search {
         display: flex;
         flex-direction: column;
@@ -444,6 +445,7 @@ button:hover {
         gap: 0.8rem;
         margin-bottom: 1.5rem;
     }
+
 
     #drugSearch, .search-section button {
         font-size: 16px;

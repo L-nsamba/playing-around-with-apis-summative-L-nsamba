@@ -1,4 +1,3 @@
-// const apiKey = process.env.OPEN_FDA_API_KEY;
 const apiKey = ""
 
 //This function handles when the user selects browse category and ensures the search function displays multiple drugs in that category
@@ -86,42 +85,42 @@ function displayDrugInfo(simpleData) {
     const resultsDiv = document.getElementById(`results`);
 
     if (simpleData.loading) {
-        resultsDiv.innerHTML = `<p>🔎 Searching for drug information...</p>`;
+        resultsDiv.innerHTML = `<p> <i class="fa-solid fa-magnifying-glass"></i> Searching for drug information...</p>`;
         return;
     }
 
     if(simpleData.error) {
-        resultsDiv.innerHTML = `<p class="error">❌ ${simpleData.error}</p>`;
+        resultsDiv.innerHTML = `<p class="error"><i class="fa-solid fa-circle-xmark"></i> ${simpleData.error}</p>`;
 
         return;
     }
 
     resultsDiv.innerHTML = `
     <div class="drug-card">
-        <h2>💊 ${simpleData.brandName}</h2>
+        <h2> <i class="fa-solid fa-pills"></i> ${simpleData.brandName}</h2>
 
         <div class="info-section">
-            <h3> 📌 Generic Name</h3>
+            <h3> <i class="fa-solid fa-map-pin"></i> Generic Name</h3>
             <div class="scrollable-content"> ${simpleData.genericName}</div>
         </div>
 
         <div class="info-section">
-            <h3>🎯Purpose</h3>
+            <h3> <i class="fa-solid fa-message"></i> Purpose</h3>
             <div class="scrollable-content"> ${simpleData.purpose}</div>
         </div>
 
         <div class="info-section">
-            <h3>⚠️ Warnings</h3>
+            <h3> <i class="fa-solid fa-triangle-exclamation"></i> Warnings</h3>
             <div class="scrollable-content"> ${simpleData.warnings}</div>
         </div>
 
         <div class="info-section">
-            <h3>🚨 Side Effects</h3>
+            <h3> <i class="fa-solid fa-exclamation"></i> Side Effects</h3>
             <div class="scrollable-content">${simpleData.sideEffects}</div>
         </div>
 
         <div class="info-section">
-            <h3>💊 Dosage Information</h3>
+            <h3> <i class="fa-solid fa-prescription-bottle"></i> Dosage Information</h3>
             <div class="scrollable-content">${simpleData.dosage}</div>
         </div>
 
@@ -157,7 +156,7 @@ function displayMultipleDrugs(drugsData) {
 
     let html = `
         <div class="category-results">
-            <h2>💊 Medications Found</h2>
+            <h2><i class="fa-solid fa-pills"></i> Medications Found</h2>
             <p class="results-count">Showing ${validDrugs.length} medications</p>
             <div class="drugs-grid">
     `
@@ -202,7 +201,7 @@ function displayMultipleOrSingleDrugInfo(data) {
 
 function displayError(message) {
     const resultsDiv = document.getElementById('results');
-    resultsDiv.innerHTML = `<div class="error">❌ ${message}</div>`
+    resultsDiv.innerHTML = `<div class="error"><i class="fa-solid fa-circle-xmark"></i> ${message}</div>`
 }
 
 //Function helps to search through a specific drug inside its category
@@ -251,7 +250,7 @@ function searchCategory(category) {
     const categoryData = categorySearches[category];
     if (categoryData) {
         const resultsDiv = document.getElementById('results')
-        resultsDiv.innerHTML = `<div class="loading">🔎 Searching for ${category.toLowerCase()} medications...</div>`;
+        resultsDiv.innerHTML = `<div class="loading"><i class="fa-solid fa-magnifying-glass"></i> Searching for ${category.toLowerCase()} medications...</div>`;
         resultsDiv.scrollIntoView({behavior:'smooth'});
 
         document.getElementById('drugSearch').value = categoryData.searchTerm;
@@ -267,7 +266,7 @@ function searchCategory(category) {
 async function findPharmacies(){
     const resultsDiv = document.getElementById('results');
 
-    resultsDiv.innerHTML = `<div class="loading"> 📍 Finding your location...</div>`;
+    resultsDiv.innerHTML = `<div class="loading"> <i class="fa-solid fa-map-location"></i> Finding your location...</div>`;
     resultsDiv.scrollIntoView({behavior:'smooth'});
 
     try {
@@ -296,7 +295,7 @@ function getCurrentPositionWithTimeout (timeout = 10000) {
 //This function searches for pharmacies in proximity basing on the geographical coordinates
 async function searchWithCoordinates(lat, lng) {
     const resultsDiv = document.getElementById('results');
-    resultsDiv.innerHTML = `<div class="loading">📍 Searching for nearby pharmacies...</div>`;
+    resultsDiv.innerHTML = `<div class="loading"><i class="fa-solid fa-location-crosshairs"></i> Searching for nearby pharmacies...</div>`;
 
     try {
         //This will query for pharmacies within 5km relative to the users location
@@ -319,10 +318,10 @@ async function searchWithCoordinates(lat, lng) {
         if (data.elements && data.elements.length > 0) {
             displayPharmacies(data.elements, lat, lng);
         } else {
-            showManualLocationInput('❌ No pharmacies found nearby. Try a different location.');
+            showManualLocationInput('<i class="fa-solid fa-circle-xmark"></i> No pharmacies found nearby. Try a different location.');
         }
     } catch (error) {
-        showManualLocationInput('❌ Search failed. Please enter your location manually')
+        showManualLocationInput('<i class="fa-solid fa-circle-xmark"></i> Search failed. Please enter your location manually')
     }
 }
 
@@ -332,7 +331,7 @@ function showManualLocationInput(message = 'Enter your location to find pharmaci
 
     resultsDiv.innerHTML = `
         <div class="manual-location">
-            <h3>📍 Find Pharmacies</h3>
+            <h3> <i class="fa-solid fa-map-location"></i> Find Pharmacies</h3>
             <p>${message}</p>
             <div class="location-search">
                 <input type="text" id="locationInput" placeholder="Enter city or address">
@@ -374,19 +373,25 @@ function displayPharmacies(pharmacies, userLat, userLng) {
 
     let html = `
         <div class="pharmacy-results">
-            <h2>📍 Nearby Pharmacies</h2>
-            <h3>🚗 Within 5km of your current location</h3>
+            <h2> <i class="fa-solid fa-location-dot"></i> Nearby Pharmacies</h2>
+            <h3> <i class="fa-solid fa-car"></i> Within 5km of your current location</h3>
             <div class="pharmacy-list">
     `;
 
-    pharmacies.slice(0,8).forEach(pharmacy => {
-        const name = pharmacy.tags?.name || 'Unknown Pharmacy'
-        const address = pharmacy.tags?.['addr:street'] || 'Address not available';
+    const validPharmacies = pharmacies.filter(pharmacy => {
+        const name = pharmacy.tags?.name;
+        const address = pharmacy.tags?.['addr:street'];
+        return name && address;
+    });
+
+    validPharmacies.slice(0,8).forEach(pharmacy => {
+        const name = pharmacy.tags.name;
+        const address = pharmacy.tags['addr:street'];
 
         html += `
             <div class="pharmacy-item">
-                <h3>🏥 ${name}</h3>
-                <p>🛣️ ${address}<p>
+                <h3> <i class="fa-solid fa-hospital-user"></i> ${name}</h3>
+                <p> <i class="fa-solid fa-location-arrow"></i> ${address}<p>
 
             </div>
         `;
@@ -404,7 +409,7 @@ function displayPharmacies(pharmacies, userLat, userLng) {
 //Drug recalls & updates function
 async function showDrugRecalls() {
     const resultsDiv = document.getElementById('results');
-    resultsDiv.innerHTML = '<div class="loading">🔎 Searching for recent drug recalls...</div>';
+    resultsDiv.innerHTML = '<div class="loading"> <i class="fa-solid fa-magnifying-glass"></i> Searching for recent drug recalls...</div>';
 
     resultsDiv.scrollIntoView({behavior: 'smooth'});
 
@@ -429,7 +434,7 @@ function displayRecalls(recalls) {
 
     let html = `
         <div class="recalls-section">
-            <h2>🚨 Recent Drug Recalls & Safety Alerts</h2>
+            <h2> <i class="fa-solid fa-triangle-exclamation"></i> Recent Drug Recalls & Safety Alerts</h2>
             <p class="recalls-info">Latest medication safety information from FDA</p>
             <div class="recalls-lists">
     `;
@@ -445,7 +450,7 @@ function displayRecalls(recalls) {
             <div class="recall-item ${recall.recall_initiation_date ? 'recent' : ''}">
                 <h3>${product}</h3>
                 <div class="recall-meta">
-                    <span class="recall-company">🏢 ${company}</span>
+                    <span class="recall-company"> <i class="fa-solid fa-building"></i> ${company}</span>
                 </div>
                 <div class="recall-reason">
                     <strong>Reason:</strong> ${reason}
