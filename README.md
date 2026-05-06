@@ -1,13 +1,16 @@
 ## MEDITRACK - DRUG INFORMATION & PHARMACY FINDER SYSTEM 💊🩺
+---
 
 ### 📖 Overview
 A full-stack web application that enables users to search for medications, explore drug categories, locate nearby pharmacies, and access real-time FDA drug recall alerts. The system is built with a scalable architecture featuring load balancing, SSL encryption, and integration with two external APIs.
-<br>
+
+---
 
 ### 🔗 Live Demo
 <li> Live Application URL: https://www.leonnsamba.tech || https://leonnsamba.tech </li>
 <li> Video Demo : https://youtu.be/guuxI-xaRO8 </li>
-<br>
+
+---
 
 ### 🎯 Features
 #### Drug Search & Information 🔬
@@ -24,13 +27,15 @@ A full-stack web application that enables users to search for medications, explo
 
 #### Responsive Design 📱
 <li>Optimized user interface that works seamlessly across desktop and mobile devices</li>
-<br>
+
+---
 
 ### 🏗️ Tech Stack
 1. Frontend: HTML, CSS, JavaScript
 2. Deployment: Nginx, Ubuntu 18.04 LTS
 3. APIs: OpenFDA API, OpenStreetMap (OSM) API
-<br>
+
+---
 
 ### 🛠️ Setup & Installation
 i. Clone the project repository locally in your desired terminal and serve the ``` index.html ``` file with your local server deployer of choice (e.g Live Server for VS Code)
@@ -43,12 +48,12 @@ ii. Configure environment variables (create an .env file to store your API KEY)
 ```sh
     OPEN_FDA_API_KEY = {your-open-fda-key}
 ```
-<br>
+---
 
 ### ❗ Note on Dependencies (No external frameworks used)
 This project uses vanilla HTML, CSS, and JavaScript in production with zero framework dependencies, as per project requirements. The ``` dotenv ``` package is used only for optional local development to manage environment variables. The application runs perfectly fine without any npm dependencies. For the faciliators/graders, the key I used will be accessible via the comment section on Canvas.
 
-<br>
+---
 
 ### 🌐 Deployment Architecture
 The application is deployed using a load-balanced infrastructure for scalibility and avaliablity on both servers.
@@ -61,7 +66,8 @@ The application is deployed using a load-balanced infrastructure for scalibility
 <li>Web Servers: Two application instances for redundancy</li>
 <li>SSL/TLS: Let's Encrypt certificates with automatic renewal</li>
 <li>Firewall: UFW configured to allow SSH(22), HTTP(80), and HTTPS(443)</li>
-<br>
+
+---
 
 ### 🚀 Deployment Guide
 #### A) Application Deployment
@@ -140,7 +146,8 @@ NB: You would be required to enter your respective valid domain name. Additional
     sudo ufw enable
     sudo ufw status
 ```
-<br>
+
+---
 
 ### 🔧 API Integration
 Special thanks to the API developers whose APIs I used for this project:
@@ -155,7 +162,7 @@ Special thanks to the API developers whose APIs I used for this project:
 <li>Documentation: https://taginfo.openstreetmap.org/taginfo/apidoc </li>
 <li>Rate Limits: 60 requests per minute </li>
 
-<br>
+---
 
 ### 🚧 Challenges & Solutions
 #### Load Balancer Round-Robin Not Distributing Traffic
@@ -164,7 +171,7 @@ Solution: I discovered that I had made a slight error in my sites-enabled config
 #### Drug category extractor issue
 Solution: I discovered that the drug category section had a bit of an issue extracting multiple drug types. I resolved this by expanding the parameters in my url to extract where the searchTerm is valid in both the json sections that have "indications_and_usage" or "description". This method proved to be the best method for extracting drugs for the respective categories.
 
-<br>
+---
 
 ### 👤 Author
 👨🏽‍💻**Leon Nsamba**<br>
