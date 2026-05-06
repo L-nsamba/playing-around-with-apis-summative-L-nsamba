@@ -1,5 +1,5 @@
 ## MEDITRACK - DRUG INFORMATION & PHARMACY FINDER SYSTEM 💊🩺
----
+
 
 ### 📖 Overview
 A full-stack web application that enables users to search for medications, explore drug categories, locate nearby pharmacies, and access real-time FDA drug recall alerts. The system is built with a scalable architecture featuring load balancing, SSL encryption, and integration with two external APIs.
