@@ -87,7 +87,7 @@ Clone the repository locally on your machine then transfer it to the respective 
 ```
 NB: You will be required to enter your private key passpharse for your key and your own IP addresses
 
-<br>
+---
 
 #### B) Load Balancer Configuration
 SSH into the load balancer and configure Nginx
@@ -114,7 +114,7 @@ SSH into the load balancer and configure Nginx
     sudo nginx -t (Test Nginx is active/running)
     sudo systemctl reload nginx
 ```
-<br>
+---
 
 #### C) SSL Certificate Setup
 <li>Install and configure Let's Encrypt if you do not have it already</li>
@@ -134,7 +134,7 @@ NB: You would be required to enter your respective valid domain name. Additional
     sudo cat /etc/letsencrypt/live/www.leonnsamba.tech/nginx.pem (To view both simultaneously)
 ```
 
-<br>
+---
 
 #### D) Firewall Configuration
 <li>Configure UFW to allow necessary traffic</li>
